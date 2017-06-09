@@ -45,8 +45,8 @@
                  rightBtnStr:(NSString *)rightStr
                 leftBtnStyle:(UIAlertActionStyle)rightStyle
                rightBtnColor:(UIColor *)rightColor
-                       leftB:(LeftBlock)leftBlock
-                      rightB:(RightBlock)rightBlock{
+                   leftBlock:(LeftBlock)leftBlock
+                  rightBlock:(RightBlock)rightBlock{
     self.leftBlock=leftBlock;
     self.rightBlock=rightBlock;
     

@@ -31,12 +31,12 @@ NSString *message = @"        你的银子”将支持快速取出（最快5秒�
                                      rightBtnStr:@"我要升级"
                                     leftBtnStyle:UIAlertActionStyleDestructive
                                    rightBtnColor:nil
-                                           leftB:^{
-                                               NSLog(@"leftBtn click");
-                                           }
-                                          rightB:^{
-                                              NSLog(@"rightBtn click");
-                                          }];
+                                       leftBlock:^{
+                                           NSLog(@"leftBtn click");
+                                       }
+                                      rightBlock:^{
+                                          NSLog(@"rightBtn click");
+                                      }];
 }
 
 @end
