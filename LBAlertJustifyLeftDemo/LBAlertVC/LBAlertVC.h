@@ -21,6 +21,26 @@ typedef void(^RightBlock)();
 + (LBAlertVC *)sharedInstance;
 
 /**
+ *  弹出alertVC - 一个按钮样式
+ */
+- (void)showAlertVC_OneWithTitle:(NSString *)titleStr
+                         message:(NSString *)messageStr
+                messageAlignment:(NSTextAlignment )messageAlignment
+                      leftBtnStr:(NSString *)leftStr
+                       leftBlock:(LeftBlock)leftBlock;
+
+/**
+ *  弹出alertVC - 两个按钮样式
+ */
+- (void)showAlertVC_BaseWithTitle:(NSString *)titleStr
+                          message:(NSString *)messageStr
+                 messageAlignment:(NSTextAlignment )messageAlignment
+                       leftBtnStr:(NSString *)leftStr
+                      rightBtnStr:(NSString *)rightStr
+                        leftBlock:(LeftBlock)leftBlock
+                       rightBlock:(RightBlock)rightBlock;
+
+/**
  弹出alertVC
  
  @param titleStr 标题
@@ -35,7 +55,7 @@ typedef void(^RightBlock)();
  @param leftBlock 右按钮Block
  @param rightBlock 右按钮Block
 
- @return <#void#>
+ @return
  */
 - (void)showAlertVCWithTitle:(NSString *)titleStr
                      message:(NSString *)messageStr

@@ -16,11 +16,38 @@
 </br>
 
 
-## 采用方法2的简单封装
+## 采用方法2的简单封装 - LBAlertVC
 
-<b>LBAlertVC</b> 
+<b> 1.简易版 - 只支持一个按钮 </b> 
 
-1.一键调用示例
+ ```
+ [[LBAlertVC sharedInstance] showAlertVC_OneWithTitle:@"我是标题"
+                                             message:@"我是message"
+                                    messageAlignment:NSTextAlignmentLeft
+                                          leftBtnStr:@"左按钮"
+                                           leftBlock:^{
+                                               NSLog(@"one - leftBtn click");
+}];
+
+ ```
+
+
+<b> 2.基础版 - 支持两个按钮 </b> 
+
+ ```
+ [[LBAlertVC  sharedInstance]showAlertVC_BaseWithTitle:@"我是标题"
+                                              message:@"我是message"
+                                     messageAlignment:NSTextAlignmentLeft
+                                           leftBtnStr:@"左按钮"
+                                          rightBtnStr:@"我是右按钮"
+                                            leftBlock:^{
+                                                NSLog(@"base - leftBtn click");
+                                            } rightBlock:^{
+                                                NSLog(@"base - rightBtn click");
+}];
+ ```
+
+<b> 3.高定制版 - 支持多元素定制 </b> 
 
  ```
  NSString *message = @"        你的银子”将支持快速取出（最快5秒到账），随时用钱随时提现，大大提高您的用钱效率。\n        现支持快速升级为“金子”（一键转购，预估“5日内”确认）。\n1.\n2.";
@@ -41,7 +68,7 @@
                                           }];
  ```
 
-2.效果示例
+<b> 4.效果示例 </b> 
  
 ![Snip20170608_97.png](https://ooo.0o0.ooo/2017/06/08/593973a8daa93.png)
 

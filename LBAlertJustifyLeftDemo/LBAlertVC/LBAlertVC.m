@@ -36,6 +36,27 @@
     return sharedManager;
 }
 
+
+#pragma mark - show alert
+
+- (void)showAlertVC_OneWithTitle:(NSString *)titleStr
+                         message:(NSString *)messageStr
+                messageAlignment:(NSTextAlignment )messageAlignment
+                      leftBtnStr:(NSString *)leftStr
+                       leftBlock:(LeftBlock)leftBlock{
+    [self showAlertVC_BaseWithTitle:titleStr message:messageStr messageAlignment:messageAlignment leftBtnStr:leftStr rightBtnStr:nil leftBlock:leftBlock rightBlock:nil];
+}
+
+- (void)showAlertVC_BaseWithTitle:(NSString *)titleStr
+                          message:(NSString *)messageStr
+                 messageAlignment:(NSTextAlignment )messageAlignment
+                       leftBtnStr:(NSString *)leftStr
+                      rightBtnStr:(NSString *)rightStr
+                        leftBlock:(LeftBlock)leftBlock
+                       rightBlock:(RightBlock)rightBlock{
+    [self showAlertVCWithTitle:titleStr message:messageStr messageAlignment:messageAlignment leftBtnStr:leftStr leftBtnStyle:UIAlertActionStyleDefault leftBtnColor:nil rightBtnStr:rightStr leftBtnStyle:UIAlertActionStyleDefault rightBtnColor:nil leftBlock:nil rightBlock:nil];
+}
+
 - (void)showAlertVCWithTitle:(NSString *)titleStr
                      message:(NSString *)messageStr
             messageAlignment:(NSTextAlignment )messageAlignment
@@ -72,6 +93,9 @@
     }
     [[LBUtil getCurrentViewController] presentViewController:alertController animated:YES completion:nil];
 }
+
+
+#pragma mark - assist method
 
 // set AlertVC-message TextAlignment
 - (void)lb_setAlertVCConetentAlignmentLeft:(UIAlertController *)alertController messageAlignment:(NSTextAlignment )messageAlignment{
