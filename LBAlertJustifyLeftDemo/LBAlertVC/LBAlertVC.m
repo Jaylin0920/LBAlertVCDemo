@@ -54,7 +54,7 @@
                       rightBtnStr:(NSString *)rightStr
                         leftBlock:(LeftBlock)leftBlock
                        rightBlock:(RightBlock)rightBlock{
-    [self showAlertVCWithTitle:titleStr message:messageStr messageAlignment:messageAlignment leftBtnStr:leftStr leftBtnStyle:UIAlertActionStyleDefault leftBtnColor:nil rightBtnStr:rightStr leftBtnStyle:UIAlertActionStyleDefault rightBtnColor:nil leftBlock:nil rightBlock:nil];
+    [self showAlertVCWithTitle:titleStr message:messageStr messageAlignment:messageAlignment leftBtnStr:leftStr leftBtnStyle:UIAlertActionStyleDefault leftBtnColor:nil rightBtnStr:rightStr leftBtnStyle:UIAlertActionStyleDefault rightBtnColor:nil leftBlock:leftBlock rightBlock:rightBlock];
 }
 
 - (void)showAlertVCWithTitle:(NSString *)titleStr
