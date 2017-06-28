@@ -72,8 +72,9 @@
                                               NSLog(@"rightBtn click");
                                           }
                                             delegate:nil];
-
-
+    
+    
+    
 }
 
 - (void)lbAlertVC:(UIAlertController *)alertVC buttonIndex:(NSInteger)buttonIndex{
