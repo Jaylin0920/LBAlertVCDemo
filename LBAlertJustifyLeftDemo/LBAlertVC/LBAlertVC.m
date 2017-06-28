@@ -12,8 +12,6 @@
 @interface LBAlertVC ()
 
 @property (nonatomic, strong) UIAlertController *alert;
-@property (nonatomic, copy) LeftBlock leftBlock;
-@property (nonatomic, copy) RightBlock rightBlock;
 @property (nonatomic, strong) NSString *titleStr;
 @property (nonatomic, strong) NSString *messageStr;
 @property (nonatomic, strong) NSString *leftStr;
@@ -22,10 +20,18 @@
 @property (nonatomic, assign) UIAlertActionStyle rightStyle;
 @property (nonatomic, strong) UIColor *leftColor;
 @property (nonatomic, strong) UIColor *rightColor;
+@property (nonatomic, copy) LeftBlock leftBlock;
+@property (nonatomic, copy) RightBlock rightBlock;
+@property (nonatomic, weak) __weak id<LBAlertVCDelegate>delegate;
 
 @end
 
 @implementation LBAlertVC
+
+- (void)dealloc{
+    NSLog(@"LBAlertVC dealloc");
+    _delegate = nil;
+}
 
 + (LBAlertVC *)sharedInstance{
     static LBAlertVC *sharedManager;
@@ -54,8 +60,18 @@
                       rightBtnStr:(NSString *)rightStr
                         leftBlock:(LeftBlock)leftBlock
                        rightBlock:(RightBlock)rightBlock{
-    [self showAlertVCWithTitle:titleStr message:messageStr messageAlignment:messageAlignment leftBtnStr:leftStr leftBtnStyle:UIAlertActionStyleDefault leftBtnColor:nil rightBtnStr:rightStr leftBtnStyle:UIAlertActionStyleDefault rightBtnColor:nil leftBlock:leftBlock rightBlock:rightBlock];
+    [self showAlertVCWithTitle:titleStr message:messageStr messageAlignment:messageAlignment leftBtnStr:leftStr leftBtnStyle:UIAlertActionStyleDefault leftBtnColor:nil rightBtnStr:rightStr leftBtnStyle:UIAlertActionStyleDefault rightBtnColor:nil leftBlock:leftBlock rightBlock:rightBlock delegate:nil];
 }
+
+- (void)showAlertVC_WithDelegate_BaseWithTitle:(NSString *)titleStr
+                                       message:(NSString *)messageStr
+                              messageAlignment:(NSTextAlignment )messageAlignment
+                                    leftBtnStr:(NSString *)leftStr
+                                   rightBtnStr:(NSString *)rightStr
+                                      delegate:(id /**<LBAlertVCDelegate>*/)delegate{
+    [self showAlertVCWithTitle:titleStr message:messageStr messageAlignment:messageAlignment leftBtnStr:leftStr leftBtnStyle:UIAlertActionStyleDefault leftBtnColor:nil rightBtnStr:rightStr leftBtnStyle:UIAlertActionStyleDefault rightBtnColor:nil leftBlock:nil rightBlock:nil delegate:delegate];
+}
+
 
 - (void)showAlertVCWithTitle:(NSString *)titleStr
                      message:(NSString *)messageStr
@@ -67,25 +83,35 @@
                 leftBtnStyle:(UIAlertActionStyle)rightStyle
                rightBtnColor:(UIColor *)rightColor
                    leftBlock:(LeftBlock)leftBlock
-                  rightBlock:(RightBlock)rightBlock{
+                  rightBlock:(RightBlock)rightBlock
+                    delegate:(id /**<LBAlertVCDelegate>*/)delegate{
     self.leftBlock=leftBlock;
     self.rightBlock=rightBlock;
+    self.delegate = delegate;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:titleStr message:messageStr preferredStyle:UIAlertControllerStyleAlert];
     [self lb_setAlertVCConetentAlignmentLeft:alertController messageAlignment:messageAlignment];
     if (leftStr) {
+        __weak typeof(self) wSelf = self;
         UIAlertAction *leftBtn = [UIAlertAction actionWithTitle:leftStr style:leftStyle? :UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if (self.leftBlock) {
-                self.leftBlock(self);
+            if (wSelf.leftBlock) {
+                wSelf.leftBlock(wSelf);
+            }
+            if (wSelf.delegate) {
+                [wSelf.delegate lbAlertVC:alertController buttonIndex:0];
             }
         }];
         if (leftColor) [leftBtn setValue:leftColor forKey:@"titleTextColor"];
         [alertController addAction:leftBtn];
     }
     if (rightStr) {
+        __weak typeof(self) wSelf = self;
         UIAlertAction *rightBtn = [UIAlertAction actionWithTitle:rightStr style:rightStyle? :UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if (self.rightBlock) {
-                self.rightBlock(self);
+            if (wSelf.rightBlock) {
+                wSelf.rightBlock(wSelf);
+            }
+            if (wSelf.delegate) {
+                [wSelf.delegate lbAlertVC:alertController buttonIndex:1];
             }
         }];
         if (rightColor) [rightBtn setValue:rightColor forKey:@"titleTextColor"];

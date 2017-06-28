@@ -8,20 +8,37 @@
 
 /**
  *  类注释：alertVC封装
- *  （支持：更改内容对齐方式；左/右按钮的内容、颜色、样式更改；一个/两个按钮）
- *  （限制：不支持两个以上按钮）
+ *
+ *  支持：(1)更改内容对齐方式
+ *       (2)左/右按钮的内容、颜色、样式更改；
+ *       (3)一个/两个按钮
+ *       (4)block、delegate两种调用方法
+ *  限制：不支持两个以上按钮
  */
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@protocol LBAlertVCDelegate <NSObject>
+- (void)lbAlertVC:(UIAlertController *)alertVC buttonIndex:(NSInteger)buttonIndex;
+@end
+
 typedef void(^LeftBlock)();
 typedef void(^RightBlock)();
+
 @interface LBAlertVC : NSObject
+
+/**
+ *  增加tag - 多个调用时方便区分
+ *
+ *  UIAlertView 继承自UIView，支持tag
+ *  UIAlertController 继承自UIViewController，不支持tag
+ */
+@property (nonatomic, assign) NSInteger tag;
 
 + (LBAlertVC *)sharedInstance;
 
 /**
- *  弹出alertVC - 一个按钮样式
+ *  弹出alertVC - 一个按钮样式 (仅支持block)
  */
 - (void)showAlertVC_OneWithTitle:(NSString *)titleStr
                          message:(NSString *)messageStr
@@ -30,7 +47,7 @@ typedef void(^RightBlock)();
                        leftBlock:(LeftBlock)leftBlock;
 
 /**
- *  弹出alertVC - 两个按钮样式
+ *  弹出alertVC - 两个按钮样式 (仅支持block)
  */
 - (void)showAlertVC_BaseWithTitle:(NSString *)titleStr
                           message:(NSString *)messageStr
@@ -41,7 +58,18 @@ typedef void(^RightBlock)();
                        rightBlock:(RightBlock)rightBlock;
 
 /**
- 弹出alertVC
+ *  弹出alertVC - 两个按钮样式 (仅支持delegate)
+ */
+- (void)showAlertVC_WithDelegate_BaseWithTitle:(NSString *)titleStr
+                                       message:(NSString *)messageStr
+                              messageAlignment:(NSTextAlignment )messageAlignment
+                                    leftBtnStr:(NSString *)leftStr
+                                   rightBtnStr:(NSString *)rightStr
+                                      delegate:(id /**<LBAlertVCDelegate>*/)delegate;
+
+/**
+ 弹出alertVC - 高定制版
+ (支持Block、Delegate)
  
  @param titleStr 标题
  @param messageStr 内容
@@ -54,6 +82,7 @@ typedef void(^RightBlock)();
  @param rightColor 右按钮颜色
  @param leftBlock 右按钮Block
  @param rightBlock 右按钮Block
+ @param delegate 支持代理 (适用于：多页面共用同一封装方法时，这个方法是类方法，弹窗交给封装方法展示，点击事件交给原页面，此时block无法在类方法中灵活回调，代理在原页面调用更为灵活)
 
  @return
  */
@@ -67,7 +96,8 @@ typedef void(^RightBlock)();
                 leftBtnStyle:(UIAlertActionStyle)rightStyle
                rightBtnColor:(UIColor *)rightColor
                    leftBlock:(LeftBlock)leftBlock
-                  rightBlock:(RightBlock)rightBlock;
+                  rightBlock:(RightBlock)rightBlock
+                    delegate:(id /**<LBAlertVCDelegate>*/)delegate;
 
 
 @end
