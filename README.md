@@ -18,7 +18,7 @@
 
 ## 采用方法2的简单封装 - LBAlertVC
 
-<b> 1.简易版 - 只支持一个按钮 </b> 
+<b> 1.简易版 - 只支持一个按钮 (仅支持block) </b> 
 
  ```
  [[LBAlertVC sharedInstance] showAlertVC_OneWithTitle:@"我是标题"
@@ -31,7 +31,7 @@
  ```
 
 
-<b> 2.基础版 - 支持两个按钮 </b> 
+<b> 2.基础版 - 支持两个按钮 (仅支持block) </b> 
 
  ```
  [[LBAlertVC  sharedInstance]showAlertVC_BaseWithTitle:@"我是标题"
@@ -46,7 +46,27 @@
 }];
  ```
 
-<b> 3.高定制版 - 支持多元素定制 </b> 
+<b> 3.基础版 - 支持两个按钮 (仅支持delegate) </b> 
+
+```
+@interface ViewController ()<LBAlertVCDelegate>
+
+[[LBAlertVC sharedInstance] showAlertVC_WithDelegate_BaseWithTitle:@"我是标题"
+                                                           message:message
+                                                  messageAlignment:NSTextAlignmentLeft
+                                                        leftBtnStr:@"左按钮"
+                                                       rightBtnStr:@"我是右按钮"
+                                                          delegate:self];
+[LBAlertVC sharedInstance].tag = 10;
+
+- (void)lbAlertVC:(UIAlertController *)alertVC buttonIndex:(NSInteger)buttonIndex{
+    NSLog(@"tag=== %ld, buttonIndex=== %ld",[LBAlertVC sharedInstance].tag, buttonIndex);
+}
+
+```
+
+
+<b> 4.高定制版 - 支持多元素定制  (支持Block、Delegate) </b> 
 
  ```
  NSString *message = @"        你的银子”将支持快速取出（最快5秒到账），随时用钱随时提现，大大提高您的用钱效率。\n        现支持快速升级为“金子”（一键转购，预估“5日内”确认）。\n1.\n2.";

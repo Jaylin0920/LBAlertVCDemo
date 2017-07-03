@@ -37,6 +37,7 @@ typedef void(^RightBlock)();
 
 + (LBAlertVC *)sharedInstance;
 
+
 /**
  *  弹出alertVC - 一个按钮样式 (仅支持block)
  */
@@ -83,6 +84,7 @@ typedef void(^RightBlock)();
  @param leftBlock 右按钮Block
  @param rightBlock 右按钮Block
  @param delegate 支持代理 (适用于：多页面共用同一封装方法时，这个方法是类方法，弹窗交给封装方法展示，点击事件交给原页面，此时block无法在类方法中灵活回调，代理在原页面调用更为灵活)
+        (建议，block或者delegate选择一个使用；推荐block，内存增加的更少)
 
  @return
  */

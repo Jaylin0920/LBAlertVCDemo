@@ -17,7 +17,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    
+    // 【 系统的 】
+    //UIAlertView   1.5MB - 0.3MB - 0.1MB - 0.05MB - 0.025MB (弹窗第一次出现，内存增加 - 第二次出现 - 第三次出现)
+    //UIAlertController   1.3 - 0.4 - 0.1 - 0.05 -  0.025
+    
+    
+    // 【 LBAlertVC 】
+    // [1]弹出来，没有block和delegate
+    // 2.0 - 0.2 - 0.2 - 0.1 - 0.05 - 后面渐渐忽略不计(点击四五次，才会增加0.1M)
+    
+    // [2]只带block
+    // 不带self: 2.0 -  0.2 - 0.2 - 0.1 - 0.05 - 后面渐渐忽略不计
+    // 带self: 2.0 - 0.2 - 0.1 - 0.1 - 0.1 - 0.05 - 后面渐渐忽略不计
+    
+    // [3]只带delegate
+    // 不带self: 2.2 -  0.4 - 0.4 - 0.3 - 0.3 - 0.3 - 0.3 - 0.2
+    // 带self: 2.0 - 0.6 - 0.4 - 0.3 - 0.3 - 0.3 - 0.3 - 0.3 - 0.3
+    
+    // [4]带delegate & blcok
+    // 和值
+    
 }
 
 - (IBAction)showLBAlertVC:(UIButton *)sender {
@@ -44,7 +65,7 @@
                                                 } rightBlock:^{
                                                     NSLog(@"base - rightBtn click");
     }];
-    
+
     //基础版 - 支持两个按钮 (仅支持delegate)
     [[LBAlertVC sharedInstance] showAlertVC_WithDelegate_BaseWithTitle:@"我是标题"
                                                                message:message
@@ -72,9 +93,6 @@
                                               NSLog(@"rightBtn click");
                                           }
                                             delegate:nil];
-    
-    
-    
 }
 
 - (void)lbAlertVC:(UIAlertController *)alertVC buttonIndex:(NSInteger)buttonIndex{
