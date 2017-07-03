@@ -18,6 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Demo检验了各种情况下，内存增加的情况，LBAlertVC内存增加都在合理范围内，请放心使用
+    
     
     // 【 系统的 】
     //UIAlertView   1.5MB - 0.3MB - 0.1MB - 0.05MB - 0.025MB (弹窗第一次出现，内存增加 - 第二次出现 - 第三次出现)
